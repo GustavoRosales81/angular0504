@@ -1,21 +1,35 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { observable } from 'rxjs';
+import { Vehiculo } from '../interfaces/vehiculo';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VehiculoService {
 
-  constructor() { }
+  constructor(private Http: HttpClient) { }
+  baseUrl = "https://epico.gob.ec/vehiculo/public/api/";
 
   getVehiculos() { 
-    return this.listaAutos;
+    //return this.listaAutos;
+    return this.Http.get<any>(this.baseUrl+"vehiculos/");
   }
 eliminarVehiculo(codigo:string){ 
   let index = this.listaAutos.findIndex ((item) => item.codigo == codigo);
   this.listaAutos.splice(index, 1);
 } 
-agregarvehiculo(vehiculo:any){
-  this.listaAutos.push(vehiculo);
+agregarvehiculo(vehiculo:Vehiculo){
+  let body = new HttpParams();
+  body = body.set('codigo',vehiculo.codigo);
+  body = body.set('marca',vehiculo.marca);
+  body = body.set('modelo',vehiculo.modelo);
+  body = body.set('anio',vehiculo.anio);
+  body = body.set('calificacion',vehiculo.calificacion);
+  if (vehiculo.foto){
+    body = body.set('foto',vehiculo.foto);
+  }
+  return this.Http.post<any>(this.baseUrl+'vehiculo/',body);
 }
 
 actualizarvehiculo(datos:any, codigo:string){
@@ -33,7 +47,7 @@ getvehiculosFiltro(filtro:string){
   }
 
  return this.listaAutos.filter((item)=> 
-   item.codigo.includes(filtro) || item.marca.includes(filtro) || item.modelo.includes(filtro)
+   item.codigo.includes(filtro.toUpperCase()) || item.marca.includes(filtro.toUpperCase()) || item.modelo.includes(filtro.toUpperCase())
   );
 
 }

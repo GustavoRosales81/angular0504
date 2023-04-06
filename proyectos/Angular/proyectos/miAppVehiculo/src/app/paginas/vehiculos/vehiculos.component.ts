@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Vehiculo } from 'src/app/interfaces/vehiculo';
 import { VehiculoService } from 'src/app/servicios/vehiculo.service';
 
 @Component({
@@ -14,7 +15,17 @@ export class VehiculosComponent implements OnInit{
   listavehiculo:any[] = [];
 
   ngOnInit() {
-    this.listavehiculo = this.vehiculoService.getVehiculos();
+    //this.listavehiculo = this.vehiculoService.getVehiculos();
+    this.consultavehiculos();
+  }
+
+  consultavehiculos(){
+    this.vehiculoService.getVehiculos().subscribe((respuesta)=>{
+      if(respuesta.codigo == 1 ){
+        this.listavehiculo = respuesta.data;
+      }
+    }); 
+
   }
 
   mostrarAlerta(calificacion:any){
@@ -30,7 +41,16 @@ this.listavehiculo = this.vehiculoService.getvehiculosFiltro(value);
   }
 
   getListavehiculos (){
-    this.listavehiculo = this.vehiculoService.getvehiculosFiltro(this.filtrarPor);
-    return this.listavehiculo;
+  return this.listavehiculo;
+    /*  this.listavehiculo = this.vehiculoService.getvehiculosFiltro(this.filtrarPor);
+    return this.listavehiculo;*/
+  }
+  guardarvehiculo(vehiculo:Vehiculo){
+    this.vehiculoService.agregarvehiculo(vehiculo).subscribe((respuesta)=> {
+      alert(respuesta.mensaje);
+      if (respuesta.codigo == 1){
+        this.consultavehiculos();    
+      }
+    });
   }
 }
