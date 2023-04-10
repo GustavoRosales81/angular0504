@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Vehiculo } from 'src/app/interfaces/vehiculo';
 import { VehiculoService } from 'src/app/servicios/vehiculo.service';
 
@@ -8,15 +9,25 @@ import { VehiculoService } from 'src/app/servicios/vehiculo.service';
   styleUrls: ['./vehiculos.component.css']
 })
 export class VehiculosComponent implements OnInit{
-  constructor(private vehiculoService: VehiculoService) { }
+  constructor(private vehiculoService: VehiculoService,
+    private formBuilder: FormBuilder) { }
 
   filtrarPor:string = "";
   mostrarImagen:boolean = false;
   listavehiculo:any[] = [];
+  formularioVehiculo: FormGroup;
 
   ngOnInit() {
     //this.listavehiculo = this.vehiculoService.getVehiculos();
     this.consultavehiculos();
+    this.formularioVehiculo = this.formBuilder.group( {
+      "marca":[null],
+      "modelo":[null],
+      "codigo":[null],
+      "anio":[null],
+      "calificacion":[null],
+      "foto":[null]
+    })
   }
 
   consultavehiculos(){
@@ -45,7 +56,8 @@ this.listavehiculo = this.vehiculoService.getvehiculosFiltro(value);
     /*  this.listavehiculo = this.vehiculoService.getvehiculosFiltro(this.filtrarPor);
     return this.listavehiculo;*/
   }
-  guardarvehiculo(vehiculo:Vehiculo){
+  guardarvehiculo(){
+    let vehiculo:Vehiculo = this.formularioVehiculo.value;
     this.vehiculoService.agregarvehiculo(vehiculo).subscribe((respuesta)=> {
       alert(respuesta.mensaje);
       if (respuesta.codigo == 1){

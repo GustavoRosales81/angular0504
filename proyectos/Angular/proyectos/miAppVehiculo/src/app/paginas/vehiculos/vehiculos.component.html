@@ -59,3 +59,50 @@
                        
     </div>  
 </div>
+<div class="modal fade" #exampleModalv id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-disaiss="modal" aria-label="Close"></button>                    
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="formularioVehiculo">
+                    <div class="mb-3">
+                        <label for="formControlCodigo" class="form-label">Codigo</label>
+                        <input type="text" class="form-control" id="formControlCodigo" formControlName ="codigo">           
+                    </div>
+                    <div class="mb-3">
+                        <label for="formControlMarca" class="form-label">Marca</label>
+                        <input type="text" class="form-control" id="formControlMarca" formControlName ="marca">           
+                    </div>
+                    <div class="mb-3">
+                        <label for="formControlModelo" class="form-label">Modelo</label>
+                        <input type="text" class="form-control" id="formControlModelo" formControlName ="modelo">           
+                    </div>
+                    <div class="mb-3">
+                        <label for="formControlAnio" class="form-label">Año</label>
+                        <input type="text" class="form-control" id="formControlAnio" formControlName ="anio">           
+                    </div>
+                    <div class="mb-3">
+                        <label for="formControlAnio" class="form-label">Calificacion</label>
+                        <input type="numvber" class="form-control" id="formControlAnio" formControlName ="calificacion">           
+                    </div>
+                    <div class="mb-3">
+                        <label for="formControlAnio" class="form-label">Imagen URL</label>
+                        <input type="url" class="form-control" id="formControlAnio" formControlName ="foto">           
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-disaiss="modal">Close</button>                    
+                <button type="button" class="btn btn-primary" (click)="guardarvehiculo()" >Save Changes</button>                    
+
+            </div>
+                
+        </div>
+            
+    </div>
+
+
+</div>

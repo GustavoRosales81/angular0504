@@ -29,7 +29,7 @@ agregarvehiculo(vehiculo:Vehiculo){
   if (vehiculo.foto){
     body = body.set('foto',vehiculo.foto);
   }
-  return this.Http.post<any>(this.baseUrl+'vehiculo/',body);
+  return this.Http.post<any>(this.baseUrl+'vehiculo/',body).pipe();
 }
 
 actualizarvehiculo(datos:any, codigo:string){
